@@ -81,6 +81,29 @@ public class Magpie
             response = "Say something, please.";
         }
 
+        else if (findWord(statement, "I want") >= 0
+                && findWord(statement, "to") >= 0)
+        {
+            response = transformIWantToStatement(statement);
+        }
+
+        else if (findWord(statement, "I want") >= 0)
+        {
+            response = transformIWantStatement(statement);
+        }
+
+        else if (findWord(statement, "I") >= 0
+                && findWord(statement, "you") >= 0)
+        {
+            response = transformIYouStatement(statement);
+        }
+
+        else if (findWord(statement, "you") >= 0
+                && findWord(statement, "me") >= 0)
+        {
+            response = transformYouMeStatement(statement);
+        }
+
         else
         {
             response = getRandomResponse();
@@ -216,8 +239,17 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        //using pretty much same code as previous methods with slight changes added
+        String statementtwo = statement.trim();
+        String getlast = statementtwo.substring(0, statementtwo.length() - 1);
+        if (getlast.equals("!")) {
+            statementtwo = statementtwo.substring(0, statementtwo.length() - 1);
+        }
+        int getone = findWord(statementtwo, "I want to");
+        //int getother = 
+        String rest = statementtwo.substring(getone + 10).trim();
+
+        return "What would it mean to " + rest + "?";
     }
 
 
@@ -231,7 +263,15 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        String statementtwo = statement.trim();
+        String getlast = statementtwo.substring(0, statementtwo.length() - 1);
+        if (getlast.equals("!")) {
+            statementtwo = statementtwo.substring(0, statementtwo.length() - 1);
+        }
+        int getYou = findWord(statementtwo, "you");
+        int getMe = findWord(statementtwo, "me");
+        //getting words between you and me to add into response
+        String rest = statementtwo.substring(getYou + 3, getMe).trim();
+        return "What makes you think that I " + rest + " you?";
     }
 }
